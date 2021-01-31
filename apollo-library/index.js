@@ -81,6 +81,8 @@ let books = [
 const typeDefs = gql`
   type Author {
     name: String!
+    id: String!
+    
     bookCount: [Book!]!
   }
   type Book {
