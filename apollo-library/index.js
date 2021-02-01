@@ -1,5 +1,5 @@
 const { ApolloServer, gql } = require("apollo-server");
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 
 let authors = [
   {
@@ -107,10 +107,7 @@ const typeDefs = gql`
       id: Int
       genres: [String!]!
     ): Book
-    editAuthor(
-      name: String!
-      setBornTo: Int
-    ): Author
+    editAuthor(name: String!, setBornTo: Int): Author
   }
 `;
 
@@ -148,19 +145,21 @@ const resolvers = {
   },
   Mutation: {
     addBook: (root, args) => {
-      const book = {...args, id: uuidv4()}
-      books = books.concat(book)
-      return book
+      const book = { ...args, id: uuidv4() };
+      books = books.concat(book);
+      return book;
     },
     editAuthor: (root, args) => {
-        const author = authors.find(author => author.name === args.name)
-        if(!author) return null
+      const author = authors.find((author) => author.name === args.name);
+      if (!author) return null;
 
-        const updatedAuthor = {...author, born: args.setBornTo }
-        authors = authors.map(author => author.name === args.name ? updatedAuthor : author)
-        return updatedAuthor
-    }
-  }
+      const updatedAuthor = { ...author, born: args.setBornTo };
+      authors = authors.map((author) =>
+        author.name === args.name ? updatedAuthor : author
+      );
+      return updatedAuthor;
+    },
+  },
 };
 
 const server = new ApolloServer({
@@ -168,6 +167,6 @@ const server = new ApolloServer({
   resolvers,
 });
 
-server.listen().then(({ url }) => {
+server.listen(4000).then(({ url }) => {
   console.log(`Server ready at ${url}`);
 });
