@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
+import Select from "react-select";
 import { useMutation } from "@apollo/client";
 import { EDIT_AUTHOR_BORN } from "../queries";
 
-export default function BirthYearForm() {
+export default function BirthYearForm({ authors }) {
   const [born, setBorn] = useState("");
-  const [name, setName] = useState("");
+  const [selected, setSelected] = useState(null);
+
+  const options = authors.map((author) => {
+    const option = { value: author.name, label: author.name };
+    return option;
+  });
 
   const [changeBorn, result] = useMutation(EDIT_AUTHOR_BORN, {
     onError: (error) => {
@@ -15,9 +21,11 @@ export default function BirthYearForm() {
   const submit = (event) => {
     event.preventDefault();
 
-    changeBorn({ variables: { name, born } });
+    if (!selected) return;
+    if (typeof born !== "number") return;
+    changeBorn({ variables: { name: selected.value, born: Number(born) } });
     setBorn("");
-    setName("");
+    setSelected(null);
   };
 
   useEffect(() => {
@@ -31,18 +39,16 @@ export default function BirthYearForm() {
       <h2>Change Author Birth Year</h2>
 
       <form onSubmit={submit}>
-        <div>
-          author name:{" "}
-          <input
-            value={name}
-            onChange={({ target }) => setName(target.value)}
-          />
-        </div>
+        <Select
+          defaultValue={selected}
+          onChange={setSelected}
+          options={options}
+        />
         <div>
           born{" "}
           <input
             value={born}
-            onChange={({ target }) => setBorn(Number(target.value))}
+            onChange={({ target }) => setBorn(target.value)}
           />
         </div>
         <button type="submit">Change Birth Year</button>
