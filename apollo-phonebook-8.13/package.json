@@ -1,8 +1,7 @@
 {
-  "name": "apollo-library",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "apollo-phonebook-8.8",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
     "@apollo/client": "^3.3.7",
     "@testing-library/jest-dom": "^5.11.9",
@@ -10,30 +9,26 @@
     "@testing-library/user-event": "^12.6.2",
     "apollo-server": "^2.19.2",
     "graphql": "^15.5.0",
-    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.14",
     "mongoose-unique-validator": "^2.0.3",
+    "nodemon": "^2.0.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-scripts": "^4.0.1",
-    "react-select": "^4.0.2",
-    "uuid": "^8.3.2"
-  },
-  "devDependencies": {
-    "dotenv": "^8.2.0",
-    "nodemon": "^2.0.7"
+    "react-scripts": "4.0.1",
+    "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "dev": "nodemon index.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "nodemon index.js"
   },
-  "author": "",
-  "license": "ISC",
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
@@ -46,5 +41,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
   }
 }
