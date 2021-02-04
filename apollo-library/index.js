@@ -96,17 +96,6 @@ mongoose
   })
   .then(() => {
     console.log("connected to MongoDB");
-    /* 
-    authors.forEach(async (author) => {
-      const newAuthor = new Author({ ...author });
-      await newAuthor.save();
-    });
-    books.forEach(async (book) => {
-      const newBook = new Book({ ...book });
-      await newBook.save();
-    });
-
-    console.log("data input completed"); */
   })
   .catch((error) => {
     console.log("error connection to MongoDB:", error.message);
@@ -121,7 +110,7 @@ const typeDefs = gql`
     genres: [String!]!
   }
   type Author {
-    name: String
+    name: String!
     born: Int
   }
   type Query {
@@ -143,13 +132,13 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    bookCount: () => books.length,
-    authorCount: () => authors.length,
+    bookCount: () => Book.collection.countDocuments(),
+    authorCount: () => Author.collection.countDocuments(),
     allBooks: (root, args) => {
-      return Book.find({});
+      return Book.find({}).populate('author');
     },
     allAuthors: (root) => {
-      return authors;
+      return Author.find({});
     },
   },
   Mutation: {
@@ -159,7 +148,6 @@ const resolvers = {
 
       //return for handling !author edge case
       if(!author) return console.log('create the author before supplying a book with the author object')
-
 
       const book = new Book({ ...args, author })
       
@@ -172,15 +160,21 @@ const resolvers = {
       }
       return book;
     },
-    editAuthorBorn: (root, args) => {
-      const author = authors.find((author) => author.name === args.name);
+    editAuthorBorn: async (root, args) => {
+      const author = await Author.findOne({name: args.name})
       if (!author) return null;
+     
+      author.born = args.born
+  
+      try {
+        await author.save()
+      } catch (error) {
+        throw new UserInputError(error.message, {
+          invalidArgs: args,
+        });
+      }
 
-      const updatedAuthor = { ...author, born: args.born };
-      authors = authors.map((author) =>
-        author.name === args.name ? updatedAuthor : author
-      );
-      return updatedAuthor;
+      return author;
     },
   },
 };
