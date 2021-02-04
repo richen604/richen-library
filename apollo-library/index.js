@@ -121,9 +121,8 @@ const typeDefs = gql`
     genres: [String!]!
   }
   type Author {
-    name: String!
+    name: String
     born: Int
-    id: String!
   }
   type Query {
     bookCount: Int!
@@ -134,9 +133,9 @@ const typeDefs = gql`
   type Mutation {
     addBook(
       title: String!
-      author: String!
       published: Int!
       genres: [String!]!
+      author: String!
     ): Book
     editAuthorBorn(name: String!, born: Int!): Author
   }
@@ -153,21 +152,17 @@ const resolvers = {
       return authors;
     },
   },
-  Author: {
-    name: (root) => root.name,
-    born: (root) => root.born,
-  },
-  Book: {
-    title: (root) => root.title,
-    published: (root) => root.published,
-    author: (root) => root.author,
-    id: (root) => root.id,
-    genres: (root) => root.genres,
-  },
   Mutation: {
     addBook: async (root, args) => {
-      const book = new Book({ ...args });
-      console.log(book);
+      //find an author if one exists
+      const author = await Author.findOne({name: args.author})
+
+      //return for handling !author edge case
+      if(!author) return console.log('create the author before supplying a book with the author object')
+
+
+      const book = new Book({ ...args, author })
+      
       try {
         await book.save();
       } catch (error) {
