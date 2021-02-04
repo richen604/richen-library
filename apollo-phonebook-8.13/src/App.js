@@ -7,6 +7,7 @@ import { ALL_PERSONS } from "./queries";
 
 const App = () => {
   const [errorMessage, setErrorMessage] = useState(null);
+  const [token, setToken] = useState(null);
   const result = useQuery(ALL_PERSONS, {
     pollInterval: 2000,
   });
