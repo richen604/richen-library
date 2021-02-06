@@ -3,13 +3,36 @@ import Authors from "./components/Authors";
 import Books from "./components/Books";
 import NewBook from "./components/NewBook";
 import LoginForm from "./components/LoginForm";
-import { useApolloClient } from "@apollo/client";
+import { useApolloClient, useSubscription } from "@apollo/client";
 import UserInfo from "./components/UserInfo";
+import {FILTER_GENRES, BOOK_ADDED} from './queries'
 
 const App = () => {
   const [page, setPage] = useState("authors");
   const [token, setToken] = useState(null);
+  const [selected, setSelected] = useState({ value: "all", label: "all" });
   const client = useApolloClient();
+
+  const updateCacheWith = (bookAdded) => {
+    const includedIn = (set, object) => 
+      set.map(p => p.id).includes(object.id)  
+
+    const dataInStore = client.readQuery({ query: FILTER_GENRES, variables: {filter: selected.value} })
+    if (!includedIn(dataInStore.filterGenre, bookAdded)) {
+      client.writeQuery({
+        query: FILTER_GENRES,
+        data: { allBooks : dataInStore.filterGenre.concat(bookAdded) }
+      })
+    }   
+  }
+
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const addedBook = subscriptionData.data.bookAdded
+      window.alert(`${addedBook.title} added`)
+      updateCacheWith(addedBook)
+    }
+  })
 
   useEffect(() => {
     const token = localStorage.getItem("library-user-token");
@@ -35,7 +58,7 @@ const App = () => {
 
         <Authors show={page === "authors"} />
 
-        <Books show={page === "books"} />
+        <Books show={page === "books"} selected={selected} setSelected={setSelected} />
         <LoginForm show={page === "login"} {...{ setToken, setPage }} />
       </div>
     );
@@ -53,9 +76,9 @@ const App = () => {
 
       <Authors show={page === "authors"} />
 
-      <Books show={page === "books"} />
+      <Books show={page === "books"} selected={selected} setSelected={setSelected} />
 
-      <NewBook show={page === "add book"} />
+      <NewBook show={page === "add book"} {...{updateCacheWith}} />
 
       <UserInfo show={page === "userinfo"} />
     </div>

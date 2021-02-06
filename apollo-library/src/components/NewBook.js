@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_BOOK } from "../queries";
 
-const NewBook = (props) => {
+const NewBook = ({show, updateCacheWith }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [published, setPublished] = useState("");
@@ -13,9 +13,11 @@ const NewBook = (props) => {
     onError: (error) => {
       console.log(error);
     },
+    update: (store, response) => {
+      updateCacheWith(response.data.addPerson)    }
   });
 
-  if (!props.show) {
+  if (!show) {
     return null;
   }
 

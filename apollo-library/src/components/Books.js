@@ -1,14 +1,14 @@
-import { useQuery } from "@apollo/client";
-import React, { useState } from "react";
+import {  useQuery } from "@apollo/client";
+import React from "react";
 import Select from "react-select";
 import { ALL_GENRES, FILTER_GENRES } from "../queries";
 
 const Books = (props) => {
-  const [selected, setSelected] = useState({ value: "all", label: "all" });
+
 
   let books = useQuery(FILTER_GENRES, {
     variables: {
-      filter: selected.value,
+      filter: props.selected.value,
     },
     onError: (error) => {
       console.log(error);
@@ -19,6 +19,8 @@ const Books = (props) => {
     pollInterval: 2000,
   });
 
+
+
   if (!props.show) {
     return null;
   }
@@ -27,6 +29,8 @@ const Books = (props) => {
 
   books = books.data.filterGenre;
   genres = genres.data.allGenres.concat(["all"]).reverse();
+
+  
 
   const options = genres.map((genre) => {
     const option = { value: genre, label: genre };
@@ -37,14 +41,14 @@ const Books = (props) => {
     <div>
       <h2>books</h2>
       Filter:{" "}
-      <button onClick={() => setSelected({ value: "all", label: "all" })}>
+      <button onClick={() => props.setSelected({ value: "all", label: "all" })}>
         {" "}
         Show All{" "}
       </button>
       <br />
       <Select
-        defaultValue={selected}
-        onChange={setSelected}
+        defaultValue={props.selected}
+        onChange={props.setSelected}
         options={options}
       />
       <table>
