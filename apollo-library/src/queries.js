@@ -66,3 +66,32 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const ALL_GENRES = gql`
+  query {
+    allGenres
+  }
+`;
+
+export const FILTER_GENRES = gql`
+  query filterGenre($filter: String!) {
+    filterGenre(filter: $filter) {
+      title
+      published
+      author {
+        name
+        born
+      }
+      genres
+      id
+    }
+  }
+`;
+
+export const USER_INFO = gql`
+  query {
+    me {
+      favoriteGenre
+    }
+  }
+`;

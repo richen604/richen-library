@@ -130,6 +130,8 @@ const typeDefs = gql`
     allBooks: [Book!]!
     allAuthors: [Author!]!
     me: User
+    filterGenre(filter: String!): [Book!]!
+    allGenres: [String!]!
   }
   type Mutation {
     addBook(
@@ -156,6 +158,26 @@ const resolvers = {
     },
     me: (root, args, context) => {
       return context.currentUser;
+    },
+    filterGenre: async (root, args) => {
+      if (args.filter === "all") return await Book.find({}).populate("author");
+
+      const filter = await Book.find({
+        genres: { $in: [`${args.filter}`] },
+      }).populate("author");
+
+      return filter;
+    },
+    allGenres: async (root) => {
+      const books = await Book.find({});
+      const genresSet = new Set(
+        [].concat.apply(
+          [],
+          books.map((book) => book.genres)
+        )
+      );
+      const genres = [...genresSet];
+      return genres;
     },
   },
   Mutation: {
