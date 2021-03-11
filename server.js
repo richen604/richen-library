@@ -81,10 +81,10 @@ const resolvers = {
   Query: {
     bookCount: () => Book.collection.countDocuments(),
     authorCount: () => Author.collection.countDocuments(),
-    allBooks: async (root, args) => {
+    allBooks: async () => {
       return await Book.find({}).populate('author')
     },
-    allAuthors: async (root) => {
+    allAuthors: async () => {
       const authors = await Author.find({})
         .populate('books')
         .populate('bookCount')
@@ -107,7 +107,7 @@ const resolvers = {
 
       return filter
     },
-    allGenres: async (root) => {
+    allGenres: async () => {
       const books = await Book.find({})
       const genresSet = new Set(
         [].concat.apply(
@@ -168,7 +168,7 @@ const resolvers = {
       try {
         await author.save()
       } catch (error) {
-        throw new UserInputError(error.message, {
+        throw new UserInputError(error.messag4000e, {
           invalidArgs: args,
         })
       }
@@ -228,7 +228,7 @@ const server = new ApolloServer({
   },
 })
 
-server.listen(4000).then(({ url, subscriptionsUrl }) => {
+server.listen(process.env.APOLLO_PORT).then(({ url, subscriptionsUrl }) => {
   console.log(`Server ready at ${url}`)
   console.log(`Subscriptions ready at ${subscriptionsUrl}`)
 })
@@ -236,7 +236,12 @@ server.listen(4000).then(({ url, subscriptionsUrl }) => {
 // add middlewares
 app.use(express.static('build'))
 
+//health check get request handling
+app.get('/health', (req, res) => {
+  res.send('ok')
+})
+
 // start express server on port 5000
-app.listen({ port: 3000 }, () => {
-  console.log('server started on port 3000')
+app.listen({ port: process.env.SERVER_PORT }, () => {
+  console.log('server started.')
 })

@@ -32,8 +32,8 @@ jobs:
             # Email that you use with heroku
             ${{secrets.HEROKU_API_KEY}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
-          heroku_app_name: richen-bloglist
-          healthcheck: 'https://richen-bloglist.herokuapp.com/api/blogs/health'
+          heroku_app_name: richen-library
+          healthcheck: 'https://richen-library.herokuapp.com/health'
           checkstring: 'ok'
           delay: 10
           rollbackonhealthcheckfailed: true
