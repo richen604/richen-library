@@ -243,5 +243,5 @@ app.get('/health', (req, res) => {
 
 // start express server on port 5000
 app.listen({ port: process.env.SERVER_PORT }, () => {
-  console.log('server started.')
+  console.log(`express server started on port ${process.env.SERVER_PORT}`)
 })
