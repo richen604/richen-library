@@ -5,7 +5,7 @@ const {
   AuthenticationError,
   gql,
   PubSub,
-} = require('apollo-server')
+} = require('apollo-server-express')
 
 const express = require('express')
 const app = express() // create express app
@@ -89,9 +89,7 @@ const resolvers = {
         .populate('books')
         .populate('bookCount')
       authors.forEach((author) => {
-        console.log(author.bookCount)
         author.bookCount = author.books.length
-        console.log(author.bookCount)
       })
       return authors
     },
@@ -212,7 +210,7 @@ const resolvers = {
   },
 }
 
-const server = new ApolloServer({
+const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({ req }) => {
@@ -228,24 +226,65 @@ const server = new ApolloServer({
   },
 })
 
-server.listen(process.env.APOLLO_PORT).then(({ url, subscriptionsUrl }) => {
+/* server.listen(process.env.APOLLO_PORT).then(({ url, subscriptionsUrl }) => {
   console.log(`Server ready at ${url}`)
   console.log(`Subscriptions ready at ${subscriptionsUrl}`)
-})
+}) */
+
+const { createServer } = require('http')
+const { execute, subscribe } = require('graphql')
+const bodyParser = require('body-parser')
+const { SubscriptionServer } = require('subscriptions-transport-ws')
 
 // add middlewares
 app.use(express.static('build'))
+
+app.use('/graphql', bodyParser.json())
+
+apolloServer.applyMiddleware({
+  app,
+  cors: {
+    credentials: true,
+    origin: 'http://localhost:3000',
+  },
+})
 
 //health check get request handling
 app.get('/health', (req, res) => {
   res.send('ok')
 })
 
-// start express server on port 5000
-app.listen({ port: process.env.SERVER_PORT || process.env.PORT }, () => {
-  console.log(
-    `express server started on port ${
-      process.env.SERVER_PORT || process.env.PORT
-    }`,
+const server = createServer(app)
+
+server.listen({ port: process.env.PORT || 4000 }, () => {
+  new SubscriptionServer(
+    {
+      execute,
+      subscribe,
+      schema: {
+        typeDefs,
+        resolvers,
+        context: async ({ req }) => {
+          const auth = req ? req.headers.authorization : null
+          if (auth && auth.toLowerCase().startsWith('bearer ')) {
+            const decodedToken = jwt.verify(
+              auth.substring(7),
+              `${process.env.JWT_SECRET}`,
+            )
+            const currentUser = await User.findById(decodedToken.id)
+            return { currentUser }
+          }
+        },
+      },
+    },
+    {
+      server: server,
+      path: '/subscriptions',
+    },
   )
 })
+
+// start express server on port 3000
+/* app.listen({ port: process.env.PORT || 4000 }, () => {
+  console.log(`express server started on port ${process.env.PORT || 4000}`)
+}) */
