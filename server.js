@@ -4,8 +4,10 @@ const { ApolloServer } = require('apollo-server-express')
 const express = require('express')
 const app = express() // create express app
 const mongoose = require('mongoose')
-const schema = require('./schema/')
+const { typeDefs, resolvers } = require('./schema/')
 const cors = require('cors')
+const User = require('./models/user')
+const jwt = require('jsonwebtoken')
 
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -21,51 +23,56 @@ mongoose
     console.log('error connection to MongoDB:', error.message)
   })
 
-const apolloServer = new ApolloServer(schema)
-
 const { createServer } = require('http')
-const { execute, subscribe } = require('graphql')
-const bodyParser = require('body-parser')
-const { SubscriptionServer } = require('subscriptions-transport-ws')
 
-app.use(
-  cors({
-    credentials: true,
-    origin: `http://localhost:${process.env.PORT || 4000}`,
-  }),
-)
+app.use(cors())
+
 app.use(express.static('build'))
+//health check get request handling
+app.get('/health', (req, res) => {
+  res.send('ok')
+})
 
-app.use('/graphql', bodyParser.json())
+const apolloServer = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: async ({ req }) => {
+    const auth = req ? req.headers.authorization : null
+    if (auth && auth.toLowerCase().startsWith('bearer ')) {
+      const decodedToken = jwt.verify(
+        auth.substring(7),
+        `${process.env.JWT_SECRET}`,
+      )
+      const currentUser = await User.findById(decodedToken.id)
+      return { currentUser }
+    }
+  },
+  subscriptions: {
+    path: '/subscriptions',
+    onConnect: () => {
+      console.log('Connected to Apollo Websocket!')
+    },
+    onDisconnect: () => {
+      console.log('Disconnected from Apollo Websocket')
+    },
+  },
+})
 
 // for production
 // for local development `http://localhost:${process.env.PORT || 4000}`
 apolloServer.applyMiddleware({
   app,
-  cors: {
-    credentials: true,
-    origin: `http://localhost:${process.env.PORT || 4000}`,
-  },
-})
-
-//health check get request handling
-app.get('/health', (req, res) => {
-  res.send('ok')
+  path: '/graphql',
 })
 
 const server = createServer(app)
 apolloServer.installSubscriptionHandlers(server)
 
 server.listen({ port: process.env.PORT || 4000 }, () => {
-  new SubscriptionServer(
-    {
-      execute,
-      subscribe,
-      schema,
-    },
-    {
-      server: server,
-      path: '/subscriptions',
-    },
+  console.log(
+    `🚀 Server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`,
+  )
+  console.log(
+    `🚀 Subscriptions ready at ws://localhost:${process.env.PORT}${server.subscriptionsPath}`,
   )
 })

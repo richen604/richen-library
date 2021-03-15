@@ -25,7 +25,6 @@ const authLink = setContext((_, { headers }) => {
 // for local development `http://localhost:${process.env.PORT || 4000}/graphql`
 const httpLink = createHttpLink({
   uri: `http://localhost:${process.env.PORT || 4000}/graphql`,
-  credentials: 'same-origin',
 })
 
 // for production `ws://richen-library.herokuapp.com:${process.env.PORT || 4000}/subscriptions`
@@ -49,11 +48,6 @@ const splitLink = split(
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: splitLink,
-})
-
-window.addEventListener('beforeunload', () => {
-  // @ts-ignore - the function is private in typescript
-  wsLink.subscriptionClient.close()
 })
 
 ReactDOM.render(
