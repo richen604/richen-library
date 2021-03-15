@@ -20,10 +20,12 @@ const authLink = setContext((_, { headers }) => {
     headers: { ...headers, authorization: token ? `Bearer ${token}` : '' },
   }
 })
-const httpLink = createHttpLink({ uri: 'http://localhost:4000/graphql' })
+const httpLink = createHttpLink({
+  uri: `http://localhost:${process.env.PORT || 4000}/graphql`,
+})
 
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4000/subscriptions`,
+  uri: `ws://localhost:${process.env.PORT || 4000}/subscriptions`,
   options: { reconnect: true },
 })
 const splitLink = split(
