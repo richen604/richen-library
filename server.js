@@ -64,7 +64,7 @@ server.listen({ port: process.env.PORT || 4000 }, () => {
     },
     {
       server: server,
-      path: '/subscriptions',
+      path: '/graphql',
     },
   )
 })
