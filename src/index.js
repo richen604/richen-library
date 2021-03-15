@@ -32,7 +32,7 @@ const httpLink = createHttpLink({
 // for local development `ws://localhost:${process.env.PORT || 4000}/subscriptions`
 const wsLink = new WebSocketLink({
   uri: `ws://localhost:${process.env.PORT || 4000}/subscriptions`,
-  options: { reconnect: true },
+  options: { reconnect: true, timeout: 20000, lazy: true },
 })
 const splitLink = split(
   ({ query }) => {
@@ -49,6 +49,11 @@ const splitLink = split(
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: splitLink,
+})
+
+window.addEventListener('beforeunload', () => {
+  // @ts-ignore - the function is private in typescript
+  wsLink.subscriptionClient.close()
 })
 
 ReactDOM.render(
