@@ -33,11 +33,13 @@ app.use(express.static('build'))
 
 app.use('/graphql', bodyParser.json())
 
+// for production
+// for local development `http://localhost:${process.env.PORT || 4000}`
 apolloServer.applyMiddleware({
   app,
   cors: {
     credentials: true,
-    origin: `http://localhost:${process.env.PORT || 4000}`,
+    origin: `https://richen-library.herokuapp.com:${process.env.PORT || 4000}`,
   },
 })
 
