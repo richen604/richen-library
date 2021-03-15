@@ -204,21 +204,7 @@ const context = async ({ req }) => {
   }
 }
 
-const schema = makeExecutableSchema({
+module.exports = {
   typeDefs,
   resolvers,
-  context,
-  subscriptions: {
-    path: '/subscriptions',
-    onConnect: () => {
-      console.log('Connected to Apollo Websocket!')
-    },
-    onDisconnect: () => {
-      console.log('Disconnected from Apollo Websocket')
-    },
-  },
-})
-
-module.exports = {
-  schema,
 }
