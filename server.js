@@ -39,7 +39,7 @@ apolloServer.applyMiddleware({
   app,
   cors: {
     credentials: true,
-    origin: `https://richen-library.herokuapp.com:${process.env.PORT || 4000}`,
+    origin: `http://localhost:${process.env.PORT || 4000}`,
   },
 })
 
