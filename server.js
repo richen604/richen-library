@@ -5,6 +5,7 @@ const express = require('express')
 const app = express() // create express app
 const mongoose = require('mongoose')
 const schema = require('./schema/')
+const cors = require('cors')
 
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -27,6 +28,7 @@ const { execute, subscribe } = require('graphql')
 const bodyParser = require('body-parser')
 const { SubscriptionServer } = require('subscriptions-transport-ws')
 
+app.use(cors())
 app.use(express.static('build'))
 
 app.use('/graphql', bodyParser.json())
