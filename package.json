@@ -10,7 +10,9 @@
     "@testing-library/user-event": "^12.6.3",
     "apollo-link-context": "^1.0.20",
     "apollo-server": "^2.19.2",
+    "apollo-server-express": "^2.21.1",
     "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
     "graphql": "^15.5.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.15",
@@ -35,9 +37,8 @@
     "prettier": "2.2.1"
   },
   "scripts": {
-    "dev-server": "nodemon index.js",
+    "dev-server": "nodemon server.js",
     "dev-client": "react-scripts start",
-    "start:apollo": "node index.js",
     "start:prod": "node server.js",
     "build": "rm -rf ./build && react-scripts build",
     "test": "react-scripts test",
