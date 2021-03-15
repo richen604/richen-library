@@ -28,6 +28,7 @@ const { createServer } = require('http')
 app.use(cors())
 
 app.use(express.static('build'))
+
 //health check get request handling
 app.get('/health', (req, res) => {
   res.send('ok')
@@ -58,8 +59,6 @@ const apolloServer = new ApolloServer({
   },
 })
 
-// for production
-// for local development `http://localhost:${process.env.PORT || 4000}`
 apolloServer.applyMiddleware({
   app,
   path: '/graphql',
@@ -69,9 +68,7 @@ const server = createServer(app)
 apolloServer.installSubscriptionHandlers(server)
 
 server.listen({ port: process.env.PORT || 4000 }, () => {
-  console.log(
-    `🚀 Server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`,
-  )
+  console.log(`🚀 Server ready at http://localhost:${process.env.PORT}/graphql`)
   console.log(
     `🚀 Subscriptions ready at ws://localhost:${process.env.PORT}${server.subscriptionsPath}`,
   )
