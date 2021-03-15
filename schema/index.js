@@ -4,7 +4,6 @@ const {
   AuthenticationError,
   gql,
   PubSub,
-  makeExecutableSchema,
 } = require('apollo-server-express')
 const Book = require('../models/book')
 const Author = require('../models/author')
@@ -117,7 +116,6 @@ const resolvers = {
         return console.log(
           'create the author before supplying a book with the author object',
         )
-
       const book = new Book({ ...args, author })
       author.books.push(book)
 
@@ -190,18 +188,6 @@ const resolvers = {
       subscribe: () => pubsub.asyncIterator(['BOOK_ADDED']),
     },
   },
-}
-
-const context = async ({ req }) => {
-  const auth = req ? req.headers.authorization : null
-  if (auth && auth.toLowerCase().startsWith('bearer ')) {
-    const decodedToken = jwt.verify(
-      auth.substring(7),
-      `${process.env.JWT_SECRET}`,
-    )
-    const currentUser = await User.findById(decodedToken.id)
-    return { currentUser }
-  }
 }
 
 module.exports = {
