@@ -30,7 +30,7 @@ const httpLink = createHttpLink({
 // for production `ws://richen-library.herokuapp.com:${process.env.PORT || 4000}/subscriptions`
 // for local development `ws://localhost:${process.env.PORT || 4000}/subscriptions`
 const wsLink = new WebSocketLink({
-  uri: `/subscriptions`,
+  uri: `ws://localhost:${process.env.PORT || 4000}/subscriptions`,
   options: { reconnect: true },
 })
 const splitLink = split(
