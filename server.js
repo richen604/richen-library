@@ -28,7 +28,12 @@ const { execute, subscribe } = require('graphql')
 const bodyParser = require('body-parser')
 const { SubscriptionServer } = require('subscriptions-transport-ws')
 
-app.use(cors())
+app.use(
+  cors({
+    credentials: true,
+    origin: `http://localhost:${process.env.PORT || 4000}`,
+  }),
+)
 app.use(express.static('build'))
 
 app.use('/graphql', bodyParser.json())
