@@ -54,6 +54,7 @@ app.get('/health', (req, res) => {
 })
 
 const server = createServer(app)
+apolloServer.installSubscriptionHandlers(server)
 
 server.listen({ port: process.env.PORT || 4000 }, () => {
   new SubscriptionServer(
@@ -64,7 +65,7 @@ server.listen({ port: process.env.PORT || 4000 }, () => {
     },
     {
       server: server,
-      path: '/graphql',
+      path: '/subscriptions',
     },
   )
 })
