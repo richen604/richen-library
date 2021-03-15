@@ -25,14 +25,13 @@ const authLink = setContext((_, { headers }) => {
 // for local development `http://localhost:${process.env.PORT || 4000}/graphql`
 const httpLink = createHttpLink({
   uri: `/graphql`,
+  credentials: 'same-origin',
 })
 
 // for production `ws://richen-library.herokuapp.com:${process.env.PORT || 4000}/subscriptions`
 // for local development `ws://localhost:${process.env.PORT || 4000}/subscriptions`
 const wsLink = new WebSocketLink({
-  uri: `ws://richen-library.herokuapp.com:${
-    process.env.PORT || 4000
-  }/subscriptions`,
+  uri: `ws://localhost:${process.env.PORT || 4000}/subscriptions`,
   options: { reconnect: true },
 })
 const splitLink = split(
