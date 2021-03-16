@@ -21,8 +21,11 @@ const authLink = setContext((_, { headers }) => {
   }
 })
 
+//local dev uri: `http://localhost:${process.env.PORT || 4000}/graphql`,
+//production uri: '/graphql',
 const httpLink = createHttpLink({
-  uri: `http://localhost:${process.env.PORT || 4000}/graphql`,
+  uri: '/graphql',
+  credentials: 'same-origin',
 })
 
 const wsLink = new WebSocketLink({
