@@ -25,7 +25,12 @@ mongoose
 
 const { createServer } = require('http')
 
-app.use(cors())
+app.use(
+  cors({
+    credentials: true,
+    origin: `http://localhost:${process.env.PORT || 4000}`,
+  }),
+)
 
 app.use(express.static('build'))
 
@@ -62,6 +67,10 @@ const apolloServer = new ApolloServer({
 apolloServer.applyMiddleware({
   app,
   path: '/graphql',
+  cors: {
+    credentials: true,
+    origin: `http://localhost:${process.env.PORT || 4000}`,
+  },
 })
 
 const server = createServer(app)
