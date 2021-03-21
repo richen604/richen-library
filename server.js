@@ -69,6 +69,6 @@ apolloServer.installSubscriptionHandlers(server)
 server.listen({ port: process.env.PORT || 4000 }, () => {
   console.log(`🚀 Server ready at http://localhost:${process.env.PORT}/graphql`)
   console.log(
-    `🚀 Subscriptions ready at ws://localhost:${process.env.PORT}${server.subscriptionsPath}`,
+    `🚀 Subscriptions ready at ws://localhost:${process.env.PORT}/subscriptions`,
   )
 })
