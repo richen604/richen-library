@@ -2,7 +2,7 @@
 
 Visit a production view of the application here at [richen-library](https://richen-library.herokuapp.com/)
 
-List your favourite blogs! Authenticated and secure, this application was built using [NodeJS](https://nodejs.org/en/), [ReactJS](https://reactjs.org/), [MongoDB](https://www.mongodb.com/), [Apollo GraphQL](https://www.apollographql.com/), [ExpressJS](https://expressjs.com/) and also includes the following frameworks:
+List your favourite books! Organize them by genre and update information right inside the application. Authenticated and secure, this application was built using [NodeJS](https://nodejs.org/en/), [ReactJS](https://reactjs.org/), [MongoDB](https://www.mongodb.com/), [Apollo GraphQL](https://www.apollographql.com/), [ExpressJS](https://expressjs.com/) and also includes the following frameworks:
 
 - [apollo-server-express](https://www.npmjs.com/package/apollo-server-express) for connecting express with Apollo in production
 - [Mongoose](https://mongoosejs.com/) for MongoDB
