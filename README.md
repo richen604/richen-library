@@ -17,9 +17,9 @@ It shows knowledge of Apollo GraphQL Queries, Mutations, Subscriptions, Fragment
 - `git fork` or `git clone` this repository and save it locally
 - run `npm install` to get dependencies
 - for development run `npm run dev-server` and `npm run dev-client`
-    - make sure all files in `src/services/` point to the correct endpoints
+    - make sure all files in `src/index.js` point to the correct endpoints
 - for production run `npm build` to build the ui and `npm run start` to start the server
-    - make sure you change the endpoints in `src/services/` !!!
+    - make sure you change the endpoints in `src/index.js` !!!
 
 ## Contributing
 
