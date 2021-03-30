@@ -12,6 +12,7 @@ import {
 
 import { getMainDefinition } from '@apollo/client/utilities'
 import { WebSocketLink } from '@apollo/client/link/ws'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 import { setContext } from 'apollo-link-context'
 const authLink = setContext((_, { headers }) => {
@@ -24,12 +25,11 @@ const authLink = setContext((_, { headers }) => {
 //local dev uri: `http://localhost:${process.env.PORT || 4000}/graphql`,
 //production uri: '/graphql',
 const httpLink = createHttpLink({
-  uri: '/graphql',
-  credentials: 'same-origin',
+  uri: `http://localhost:4000/graphql`,
 })
 
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:${process.env.PORT || 4000}/subscriptions`,
+  uri: `ws://localhost:4000/subscriptions`,
   options: { reconnect: true },
 })
 const splitLink = split(
