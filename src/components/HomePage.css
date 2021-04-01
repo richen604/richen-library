@@ -1,21 +1,60 @@
 @media only screen and (max-width: 600px) {
+  #homepage {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas:
+      'sidebar-left top-window sidebar-right'
+      'sidebar-left middle-window sidebar-right'
+      'sidebar-left . sidebar-right';
+  }
+
+  #sidebar-left {
+    grid-area: sidebar-left;
+  }
+
+  #sidebar-right {
+    grid-area: sidebar-right;
+  }
+
+  #top-window {
+    grid-area: top-window;
+  }
+
+  #middle-window {
+    grid-area: middle-window;
+  }
 }
 
 @media only screen and (min-width: 600px) {
+  #homepage {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas:
+      'sidebar-left top-window sidebar-right'
+      'sidebar-left middle-window sidebar-right'
+      'sidebar-left . sidebar-right';
+  }
+
+  #sidebar-left {
+    grid-area: sidebar-left;
+  }
+
+  #sidebar-right {
+    grid-area: sidebar-right;
+  }
+
+  #top-window {
+    grid-area: top-window;
+  }
+
+  #middle-window {
+    grid-area: middle-window;
+  }
 }
 
 @media only screen and (min-width: 1000px) {
 }
+
 #homepage {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-areas:
-    '| sidebar-left | top-window | sidebar-right |'
-    '| sidebar-left | middle-window | sidebar-right |'
-    '| sidebar-left | . | sidebar-right |';
-}
-
-#sidebar-left {
-  grid-area: sidebar-left;
 }

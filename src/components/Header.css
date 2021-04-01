@@ -1,8 +1,90 @@
 @media only screen and (max-width: 600px) {
+  #header-left-container {
+    grid-area: left-container;
+    padding: 10px;
+  }
+
+  #header-right-container {
+    grid-area: right-container;
+    justify-self: right;
+    padding: 10px;
+  }
+  #header-login-logo-wrapper {
+    margin: 0;
+    padding: 5px 2px;
+  }
+  #header-login-logo {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin: 0;
+  }
+
+  #header-login-button {
+    display: none;
+  }
 }
 
 @media only screen and (min-width: 600px) {
+  #header-left-container {
+    grid-area: left-container;
+    padding: 10px;
+  }
+
+  #header-right-container {
+    grid-area: right-container;
+    justify-self: right;
+    padding: 10px;
+  }
+  #header-login-logo-wrapper {
+    display: none;
+  }
 }
 
 @media only screen and (min-width: 1000px) {
+  #header-left-container {
+    grid-area: left-container;
+    padding: 10px;
+  }
+
+  #header-right-container {
+    grid-area: right-container;
+    justify-self: right;
+    padding: 10px;
+  }
+  #header-login-logo-wrapper {
+    display: none;
+  }
+}
+
+#header {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto;
+  grid-template-areas: 'left-container right-container';
+}
+
+#header-left-container {
+  grid-area: left-container;
+}
+
+#header-right-container {
+  grid-area: right-container;
+  justify-self: right;
+  padding: 10px;
+}
+
+#header-brand {
+}
+
+.header-links {
+  padding: 10px;
+}
+
+#header-login-button {
+  padding: 4px 8px;
+  border: 2px solid black;
+  border-radius: 15px;
 }
