@@ -35,11 +35,9 @@ const FavoriteGenre = ({ user, books, setFavorite }) => {
   )
 }
 
-const UserInfo = (props) => {
+const UserInfo = () => {
   const [favorite, setFavorite] = useState('all')
   let user = useQuery(USER_INFO, {})
-
-  console.log(user)
 
   let books = useQuery(FILTER_GENRES, {
     variables: {
@@ -50,10 +48,6 @@ const UserInfo = (props) => {
     },
     pollInterval: 2000,
   })
-
-  if (!props.show) {
-    return null
-  }
 
   if (books.loading || user.loading) return <div>loading...</div>
 

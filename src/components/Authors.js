@@ -3,7 +3,7 @@ import { useQuery, useMutation } from '@apollo/client'
 import Select from 'react-select'
 import { ALL_AUTHORS, EDIT_AUTHOR_BORN } from '../queries'
 
-const Authors = (props) => {
+const Authors = () => {
   const [born, setBorn] = useState('')
   const [selected, setSelected] = useState(null)
   const [changeBorn] = useMutation(EDIT_AUTHOR_BORN, {
@@ -13,10 +13,6 @@ const Authors = (props) => {
     },
   })
   const result = useQuery(ALL_AUTHORS, { polling: 2000 })
-
-  if (!props.show) {
-    return null
-  }
 
   if (result.loading) return <div>loading...</div>
 
