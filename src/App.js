@@ -12,6 +12,8 @@ import './App.css'
 const App = () => {
   return (
     <Router>
+      <div id="background-triangle-1" />
+      <div id="background-triangle-2" />
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />

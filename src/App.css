@@ -6,3 +6,31 @@ body {
     rgba(232, 247, 250, 1) 41%
   );
 }
+
+#background-triangle-1 {
+  position: absolute;
+  z-index: -1;
+  transform: rotate(-45deg);
+  top: -129px;
+  right: -29px;
+  width: 0;
+  height: 0;
+  border-top: 200px solid transparent;
+  border-left: 200px solid skyblue;
+  border-bottom: 200px solid transparent;
+  border-radius: 80px;
+}
+
+#background-triangle-2 {
+  position: absolute;
+  z-index: -1;
+  transform: rotate(-45deg);
+  top: -129px;
+  right: -29px;
+  width: 0;
+  height: 0;
+  border-top: 175px solid transparent;
+  border-left: 175px solid lightgreen;
+  border-bottom: 175px solid transparent;
+  border-radius: 80px;
+}

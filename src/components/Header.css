@@ -1,14 +1,4 @@
 @media only screen and (max-width: 600px) {
-  #header-left-container {
-    grid-area: left-container;
-    padding: 10px;
-  }
-
-  #header-right-container {
-    grid-area: right-container;
-    justify-self: right;
-    padding: 10px;
-  }
   #header-login-logo-wrapper {
     margin: 0;
     padding: 5px 2px;
@@ -26,32 +16,12 @@
 }
 
 @media only screen and (min-width: 600px) {
-  #header-left-container {
-    grid-area: left-container;
-    padding: 10px;
-  }
-
-  #header-right-container {
-    grid-area: right-container;
-    justify-self: right;
-    padding: 10px;
-  }
   #header-login-logo-wrapper {
     display: none;
   }
 }
 
 @media only screen and (min-width: 1000px) {
-  #header-left-container {
-    grid-area: left-container;
-    padding: 10px;
-  }
-
-  #header-right-container {
-    grid-area: right-container;
-    justify-self: right;
-    padding: 10px;
-  }
   #header-login-logo-wrapper {
     display: none;
   }
@@ -68,18 +38,24 @@
 
 #header-left-container {
   grid-area: left-container;
+  padding: 0;
+  margin: 0;
 }
 
 #header-right-container {
   grid-area: right-container;
+  align-items: center;
   justify-self: right;
   padding: 10px;
 }
 
 #header-brand {
+  padding: 0;
+  margin: 0;
 }
 
 .header-links {
+  grid-area: right-container;
   padding: 10px;
 }
 

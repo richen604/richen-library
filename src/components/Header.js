@@ -12,10 +12,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 
 import './Header.css'
+import LoginFormDropdown from './LoginFormDropdown'
 
 export default function Header() {
   const [token, setToken] = useState(null)
-  //const [isOpen, setIsOpen] = useState(false)
   useEffect(() => {
     const token = localStorage.getItem('library-user-token')
     if (token) {
@@ -34,17 +34,21 @@ export default function Header() {
         <NavbarBrand id="header-brand" href="/">
           Library
         </NavbarBrand>
+      </div>
+      <div id="header-right-container">
         <Link className="header-links" to="/authors">
           Authors
         </Link>
         <Link className="header-links" to="/books">
           Books
         </Link>
-        {token && <Link to="/userinfo">UserInfo</Link>}
-      </div>
-      <div id="header-right-container">
+        {token && (
+          <Link className="header-links" to="/userinfo">
+            UserInfo
+          </Link>
+        )}
         {token !== null ? (
-          <button onClick={() => handleLogout}>logout</button>
+          <button onClick={() => handleLogout()}>logout</button>
         ) : (
           <UncontrolledDropdown inNavbar>
             <DropdownToggle id="header-login-button" nav>
@@ -53,7 +57,9 @@ export default function Header() {
             <DropdownToggle id="header-login-logo-wrapper" nav>
               <FontAwesomeIcon id="header-login-logo" icon={faSignInAlt} />
             </DropdownToggle>
-            <DropdownMenu id="header-dropdown-box" right></DropdownMenu>
+            <DropdownMenu id="header-dropdown-box" right>
+              <LoginFormDropdown {...{ setToken }} />
+            </DropdownMenu>
           </UncontrolledDropdown>
         )}
       </div>
