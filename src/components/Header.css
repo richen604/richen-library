@@ -192,10 +192,7 @@
 }
 
 #header-dropdown-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
   width: 250px;
-  height: 150px;
+  height: 250px;
   padding: 10px;
 }

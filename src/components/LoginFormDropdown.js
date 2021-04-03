@@ -28,24 +28,33 @@ const LoginFormDropdown = ({ setToken }) => {
   }
 
   return (
-    <Form id="login-dropdown-form" onSubmit={submit}>
-      <Input
-        className="login-dropdown-input"
-        value={username}
-        placeholder="Username..."
-        onChange={({ target }) => setUsername(target.value)}
-      />
-      <Input
-        className="login-dropdown-input"
-        type="password"
-        placeholder="Password..."
-        value={password}
-        onChange={({ target }) => setPassword(target.value)}
-      />
-      <Button id="login-dropdown-button" type="submit">
-        Sign In
-      </Button>
-    </Form>
+    <>
+      <Form id="login-dropdown-form" onSubmit={submit}>
+        <Input
+          className="login-dropdown-input"
+          value={username}
+          placeholder="Username..."
+          onChange={({ target }) => setUsername(target.value)}
+        />
+        <Input
+          className="login-dropdown-input"
+          type="password"
+          placeholder="Password..."
+          value={password}
+          onChange={({ target }) => setPassword(target.value)}
+        />
+        <Button id="login-dropdown-button" type="submit">
+          Sign In
+        </Button>
+      </Form>
+      <div id="login-dropdown-info">
+        <p>
+          <strong>Username:</strong> admin <br /> <strong>Password:</strong>{' '}
+          admin
+        </p>
+        <p></p>
+      </div>
+    </>
   )
 }
 
