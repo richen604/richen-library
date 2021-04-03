@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import Select from 'react-select'
 import { ALL_GENRES, FILTER_GENRES, BOOK_ADDED } from '../queries'
 import { useApolloClient, useSubscription } from '@apollo/client'
+import './Books.css'
+import { Table } from 'reactstrap'
 
 const Books = () => {
   const [selected, setSelected] = useState({ value: 'all', label: 'all' })
@@ -55,20 +57,18 @@ const Books = () => {
   })
 
   return (
-    <div>
-      <h2>books</h2>
-      Filter:{' '}
-      <button onClick={() => setSelected({ value: 'all', label: 'all' })}>
-        {' '}
-        Show All{' '}
-      </button>
-      <br />
-      <Select
-        defaultValue={selected}
-        onChange={setSelected}
-        options={options}
-      />
-      <table>
+    <div id="books-container">
+      <div id="books-select-container">
+        <h2>Books</h2>
+        Filter: <br />
+        <Select
+          id="books-select"
+          defaultValue={selected}
+          onChange={setSelected}
+          options={options}
+        />
+      </div>
+      <Table id="books-table">
         <tbody>
           <tr>
             <th></th>
@@ -83,7 +83,7 @@ const Books = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }
