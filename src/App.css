@@ -5,6 +5,7 @@ body {
     rgba(231, 246, 250, 1) 0%,
     rgba(232, 247, 250, 1) 41%
   );
+  overflow: hidden;
 }
 
 #background-triangle-1 {

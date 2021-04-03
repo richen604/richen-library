@@ -4,30 +4,37 @@ import { Link } from 'react-router-dom'
 import {
   Navbar,
   NavbarBrand,
-  UncontrolledDropdown,
+  Dropdown,
   DropdownToggle,
   DropdownMenu,
+  Button,
 } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
+import { faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 import './Header.css'
 import LoginFormDropdown from './LoginFormDropdown'
 
 export default function Header() {
+  const client = useApolloClient()
   const [token, setToken] = useState(null)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+
+  const toggle = () => setDropdownOpen((prevState) => !prevState)
+
   useEffect(() => {
     const token = localStorage.getItem('library-user-token')
     if (token) {
       setToken(token)
     }
   }, [])
-  const client = useApolloClient()
+
   const handleLogout = () => {
     setToken(null)
     localStorage.clear()
     client.resetStore()
   }
+
   return (
     <Navbar id="header">
       <div id="header-left-container">
@@ -43,14 +50,39 @@ export default function Header() {
           Books
         </Link>
         {token && (
-          <Link className="header-links" to="/userinfo">
-            UserInfo
-          </Link>
+          <>
+            <Link className="header-links" to="/newbook">
+              New Book
+            </Link>
+            <Link className="header-links" to="/userinfo">
+              UserInfo
+            </Link>
+          </>
         )}
         {token !== null ? (
-          <button onClick={() => handleLogout()}>logout</button>
+          <>
+            <Button
+              nav
+              id="header-logout-wrapper"
+              onClick={() => handleLogout()}
+            >
+              <FontAwesomeIcon
+                id="header-logout-icon"
+                onClick={() => handleLogout()}
+                icon={faSignOutAlt}
+              />
+            </Button>
+
+            <Button
+              nav
+              id="header-logout-button"
+              onClick={() => handleLogout()}
+            >
+              Sign Out
+            </Button>
+          </>
         ) : (
-          <UncontrolledDropdown inNavbar>
+          <Dropdown inNavbar isOpen={dropdownOpen} toggle={toggle}>
             <DropdownToggle id="header-login-button" nav>
               Sign In
             </DropdownToggle>
@@ -60,7 +92,7 @@ export default function Header() {
             <DropdownMenu id="header-dropdown-box" right>
               <LoginFormDropdown {...{ setToken }} />
             </DropdownMenu>
-          </UncontrolledDropdown>
+          </Dropdown>
         )}
       </div>
     </Navbar>

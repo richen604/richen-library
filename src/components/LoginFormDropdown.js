@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useMutation } from '@apollo/client'
 import { LOGIN } from '../queries'
 import { Form, Input, Button } from 'reactstrap'
+import './LoginFormDropdown.css'
 
 const LoginFormDropdown = ({ setToken }) => {
   const [username, setUsername] = useState('')
