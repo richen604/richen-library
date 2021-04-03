@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useApolloClient } from '@apollo/client'
 import { Link } from 'react-router-dom'
 import {
@@ -14,10 +14,11 @@ import { faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 import './Header.css'
 import LoginFormDropdown from './LoginFormDropdown'
+import UserContext from '../context/UserContext'
 
 export default function Header() {
   const client = useApolloClient()
-  const [token, setToken] = useState(null)
+  const { token, setToken } = useContext(UserContext)
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const toggle = () => setDropdownOpen((prevState) => !prevState)

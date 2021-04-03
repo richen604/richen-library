@@ -6,3 +6,31 @@
 
 @media only screen and (min-width: 1000px) {
 }
+
+#authors-birth-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 10px;
+}
+
+.authors-input {
+  width: 300px;
+}
+
+#authors-button {
+  align-self: center;
+  color: #0056b3;
+  border: 1px solid #0056b3;
+  background-color: transparent;
+}
+
+#authors-table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}

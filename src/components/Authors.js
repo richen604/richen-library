@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useQuery, useMutation } from '@apollo/client'
 import Select from 'react-select'
 import { ALL_AUTHORS, EDIT_AUTHOR_BORN } from '../queries'
+import { Form, Input, Button, Table } from 'reactstrap'
+import './Authors.css'
+import UserContext from '../context/UserContext'
 
 const Authors = () => {
+  const { token } = useContext(UserContext)
   const [born, setBorn] = useState('')
   const [selected, setSelected] = useState(null)
   const [changeBorn] = useMutation(EDIT_AUTHOR_BORN, {
@@ -40,8 +44,33 @@ const Authors = () => {
   return (
     <>
       <div>
-        <h2>authors</h2>
-        <table>
+        <h2>Authors</h2>
+        {token && (
+          <div id="authors-birth-container">
+            <h6>Change Author Birth Year</h6>
+            <Form id="authors-form" onSubmit={submit}>
+              <Select
+                placeholder="Select Author..."
+                className="authors-input"
+                defaultValue={selected}
+                onChange={setSelected}
+                options={options}
+              />
+              <div>
+                <Input
+                  placeholder="Authors New Birth Year..."
+                  className="authors-input"
+                  value={born}
+                  onChange={({ target }) => setBorn(target.value)}
+                />
+              </div>
+              <Button id="authors-button" type="submit">
+                Change Birth Year
+              </Button>
+            </Form>
+          </div>
+        )}
+        <Table id="authors-table">
           <tbody>
             <tr>
               <th></th>
@@ -56,26 +85,7 @@ const Authors = () => {
               </tr>
             ))}
           </tbody>
-        </table>
-      </div>
-      <div>
-        <h2>Change Author Birth Year</h2>
-
-        <form onSubmit={submit}>
-          <Select
-            defaultValue={selected}
-            onChange={setSelected}
-            options={options}
-          />
-          <div>
-            born{' '}
-            <input
-              value={born}
-              onChange={({ target }) => setBorn(target.value)}
-            />
-          </div>
-          <button type="submit">Change Birth Year</button>
-        </form>
+        </Table>
       </div>
     </>
   )
