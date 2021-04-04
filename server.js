@@ -5,7 +5,7 @@ const express = require('express')
 const app = express() // create express app
 const mongoose = require('mongoose')
 const { typeDefs, resolvers } = require('./schema/')
-//const cors = require('cors')
+const cors = require('cors')
 const User = require('./models/user')
 const jwt = require('jsonwebtoken')
 
@@ -26,6 +26,7 @@ mongoose
 const { createServer } = require('http')
 
 app.use(express.static('build'))
+app.use(cors())
 
 //health check get request handling
 app.get('/health', (req, res) => {
