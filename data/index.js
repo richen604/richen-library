@@ -70,7 +70,7 @@ let books = [
     genres: ['classic', 'crime'],
   },
   {
-    title: 'The Demon ',
+    title: 'The Demon',
     published: 1872,
     author: 'Fyodor Dostoevsky',
     genres: ['classic', 'revolution'],
