@@ -31,10 +31,10 @@ const typeDefs = gql`
     genres: [String!]!
   }
   type Author {
+    id: ID!
     name: String!
     born: Int
-    books: [Book!]!
-    bookCount: Int!
+    books: [Book]!
   }
   type Query {
     bookCount: Int!
@@ -52,6 +52,7 @@ const typeDefs = gql`
       genres: [String!]!
       author: String!
     ): Book
+    addAuthor(name: String!, born: Int): Author
     editAuthorBorn(name: String!, born: Int!): Author
     createUser(username: String!, favoriteGenre: String!): User
     login(username: String!, password: String!): Token
@@ -60,18 +61,12 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    bookCount: () => Book.collection.countDocuments(),
     authorCount: () => Author.collection.countDocuments(),
     allBooks: async () => {
       return await Book.find({}).populate('author')
     },
     allAuthors: async () => {
-      const authors = await Author.find({})
-        .populate('books')
-        .populate('bookCount')
-      authors.forEach((author) => {
-        author.bookCount = author.books.length
-      })
+      const authors = await Author.find({}).populate('books')
       return authors
     },
     me: (root, args, context) => {
@@ -131,6 +126,32 @@ const resolvers = {
       await pubsub.publish('BOOK_ADDED', { bookAdded: book })
       return book
     },
+    addAuthor: async (root, args, context) => {
+      const currentUser = context.currentUser
+
+      if (!currentUser) {
+        throw new AuthenticationError('not authenticated')
+      }
+
+      const author = await Author.findOne({ name: args.name })
+      if (author) {
+        throw new UserInputError('Author already exists', {
+          invalidArgs: args,
+        })
+      }
+
+      const newAuthor = new Author({ ...args, books: [] })
+
+      try {
+        await newAuthor.save()
+      } catch (error) {
+        throw new UserInputError(error.message, {
+          invalidArgs: args,
+        })
+      }
+
+      return newAuthor
+    },
     editAuthorBorn: async (root, args, context) => {
       const currentUser = context.currentUser
 
@@ -146,7 +167,7 @@ const resolvers = {
       try {
         await author.save()
       } catch (error) {
-        throw new UserInputError(error.messag4000e, {
+        throw new UserInputError(error.message, {
           invalidArgs: args,
         })
       }

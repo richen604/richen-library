@@ -1,8 +1,14 @@
-@media only screen and (max-width: 600px) {
+#userinfo-favorite {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@media only screen and (min-width: 600px) {
-}
-
-@media only screen and (min-width: 1000px) {
+#userinfo-nofavorite {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
 }

@@ -1,37 +1,13 @@
 import { useQuery } from '@apollo/client'
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import Select from 'react-select'
-import { ALL_GENRES, FILTER_GENRES, BOOK_ADDED } from '../queries'
-import { useApolloClient, useSubscription } from '@apollo/client'
+import { ALL_GENRES, FILTER_GENRES } from '../queries'
 import './Books.css'
 import { Table } from 'reactstrap'
+import SelectedContext from '../context/SelectedContext'
 
 const Books = () => {
-  const [selected, setSelected] = useState({ value: 'all', label: 'all' })
-  const client = useApolloClient()
-
-  const updateCacheWith = (bookAdded) => {
-    const includedIn = (set, object) => set.map((p) => p.id).includes(object.id)
-
-    const dataInStore = client.readQuery({
-      query: FILTER_GENRES,
-      variables: { filter: selected.value },
-    })
-    if (!includedIn(dataInStore.filterGenre, bookAdded)) {
-      client.writeQuery({
-        query: FILTER_GENRES,
-        data: { allBooks: dataInStore.filterGenre.concat(bookAdded) },
-      })
-    }
-  }
-
-  useSubscription(BOOK_ADDED, {
-    onSubscriptionData: ({ subscriptionData }) => {
-      const addedBook = subscriptionData.data.bookAdded
-      window.alert(`${addedBook.title} added`)
-      updateCacheWith(addedBook)
-    },
-  })
+  const { selected, setSelected } = useContext(SelectedContext)
 
   let books = useQuery(FILTER_GENRES, {
     variables: {

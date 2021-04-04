@@ -44,7 +44,7 @@ const Authors = () => {
   return (
     <>
       <div>
-        <h2>Authors</h2>
+        <h2 id="authors-title">Authors</h2>
         {token && (
           <div id="authors-birth-container">
             <h6>Change Author Birth Year</h6>
@@ -81,7 +81,7 @@ const Authors = () => {
               <tr key={a.name}>
                 <td>{a.name}</td>
                 <td>{a.born}</td>
-                <td>{a.bookCount}</td>
+                <td>{a.books.length}</td>
               </tr>
             ))}
           </tbody>

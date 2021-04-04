@@ -1,0 +1,33 @@
+#newBook-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#newBook-form {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+#newBook-book-button {
+  color: #0056b3;
+  background-color: transparent;
+  border: 1px solid #0056b3;
+  margin: 5px;
+  justify-self: center;
+  align-self: center;
+}
+#newBook-genre-button {
+  color: #0056b3;
+  background-color: transparent;
+  border: 1px solid #0056b3;
+  margin: 5px;
+  justify-self: center;
+  align-self: center;
+}
+
+.newBook-input {
+  margin: 10px;
+}

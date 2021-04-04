@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import React, { useState, useEffect } from 'react'
 import { USER_INFO, FILTER_GENRES } from '../queries'
+import './UserInfo.css'
 
 const FavoriteGenre = ({ user, books, setFavorite }) => {
   useEffect(() => {
@@ -55,11 +56,13 @@ const UserInfo = () => {
   user = user.data.me
 
   if (user.favoriteGenre) {
-    return <FavoriteGenre {...{ user, books, setFavorite }} />
+    return (
+      <FavoriteGenre id="userinfo-favorite" {...{ user, books, setFavorite }} />
+    )
   }
 
   return (
-    <div>
+    <div id="userinfo-nofavorite">
       Username: {user.username} <br /> Favorite Genre: None
     </div>
   )

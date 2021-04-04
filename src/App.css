@@ -8,17 +8,102 @@ body {
   overflow: hidden;
 }
 
+@media only screen and (max-width: 450px) {
+  #background-triangle-1 {
+    border-top: 200px solid transparent;
+    border-left: 200px solid #afe2eb;
+    border-bottom: 200px solid transparent;
+    top: -129px;
+    right: -29px;
+  }
+
+  #background-triangle-2 {
+    border-top: 175px solid transparent;
+    border-left: 175px solid #8dd7e6;
+    border-bottom: 175px solid transparent;
+    top: -129px;
+    right: -29px;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  #background-triangle-1 {
+    border-top: 300px solid transparent;
+    border-left: 300px solid #afe2eb;
+    border-bottom: 300px solid transparent;
+    top: -200px;
+    right: -50px;
+  }
+
+  #background-triangle-2 {
+    border-top: 225px solid transparent;
+    border-left: 225px solid #8dd7e6;
+    border-bottom: 225px solid transparent;
+    top: -149px;
+    right: -33px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  #background-triangle-1 {
+    border-top: 400px solid transparent;
+    border-left: 400px solid #afe2eb;
+    border-bottom: 400px solid transparent;
+    top: -259px;
+    right: -59px;
+  }
+
+  #background-triangle-2 {
+    border-top: 318px solid transparent;
+    border-left: 318px solid #8dd7e6;
+    border-bottom: 318px solid transparent;
+    top: -205px;
+    right: -45px;
+  }
+}
+
+@media only screen and (min-width: 750px) {
+  #background-triangle-1 {
+    border-top: 400px solid transparent;
+    border-left: 400px solid #afe2eb;
+    border-bottom: 400px solid transparent;
+    top: -259px;
+    right: -59px;
+  }
+
+  #background-triangle-2 {
+    border-top: 318px solid transparent;
+    border-left: 318px solid #8dd7e6;
+    border-bottom: 318px solid transparent;
+    top: -205px;
+    right: -45px;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  #background-triangle-1 {
+    border-top: 400px solid transparent;
+    border-left: 400px solid #afe2eb;
+    border-bottom: 400px solid transparent;
+    top: -259px;
+    right: -59px;
+  }
+
+  #background-triangle-2 {
+    border-top: 318px solid transparent;
+    border-left: 318px solid #8dd7e6;
+    border-bottom: 318px solid transparent;
+    top: -205px;
+    right: -45px;
+  }
+}
+
 #background-triangle-1 {
   position: absolute;
   z-index: -1;
   transform: rotate(-45deg);
-  top: -129px;
-  right: -29px;
   width: 0;
   height: 0;
-  border-top: 200px solid transparent;
-  border-left: 200px solid skyblue;
-  border-bottom: 200px solid transparent;
   border-radius: 80px;
 }
 
@@ -26,12 +111,7 @@ body {
   position: absolute;
   z-index: -1;
   transform: rotate(-45deg);
-  top: -129px;
-  right: -29px;
   width: 0;
   height: 0;
-  border-top: 175px solid transparent;
-  border-left: 175px solid lightgreen;
-  border-bottom: 175px solid transparent;
   border-radius: 80px;
 }

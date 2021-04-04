@@ -10,7 +10,11 @@ import {
   Button,
 } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+  faBookOpen,
+  faSignInAlt,
+  faSignOutAlt,
+} from '@fortawesome/free-solid-svg-icons'
 
 import './Header.css'
 import LoginFormDropdown from './LoginFormDropdown'
@@ -39,6 +43,7 @@ export default function Header() {
   return (
     <Navbar id="header">
       <div id="header-left-container">
+        <FontAwesomeIcon id="header-main-logo" icon={faBookOpen} />
         <NavbarBrand id="header-brand" href="/">
           Library
         </NavbarBrand>
@@ -62,11 +67,7 @@ export default function Header() {
         )}
         {token !== null ? (
           <>
-            <Button
-              nav
-              id="header-logout-wrapper"
-              onClick={() => handleLogout()}
-            >
+            <Button id="header-logout-wrapper" onClick={() => handleLogout()}>
               <FontAwesomeIcon
                 id="header-logout-icon"
                 onClick={() => handleLogout()}
@@ -74,11 +75,7 @@ export default function Header() {
               />
             </Button>
 
-            <Button
-              nav
-              id="header-logout-button"
-              onClick={() => handleLogout()}
-            >
+            <Button id="header-logout-button" onClick={() => handleLogout()}>
               Sign Out
             </Button>
           </>

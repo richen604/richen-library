@@ -73,7 +73,7 @@
   }
 }
 
-@media only screen and (min-width: 450px) {
+@media only screen and (min-width: 490px) {
   #header {
     padding: 0;
     margin: 0;
@@ -150,12 +150,22 @@
   margin: 0;
 }
 
+#header-main-logo {
+  color: #1f7065;
+  margin: 5px;
+  width: 25px;
+  height: auto;
+}
+
 #header-brand {
+  font-weight: bold;
+  color: #1f7065;
   padding: 5px;
   margin: 0;
 }
 
 .header-links {
+  color: #1f7065;
   grid-area: right-container;
   padding: 5px;
   align-self: end;
@@ -163,7 +173,7 @@
 
 #header-login-button {
   padding: 4px 8px;
-  border: 1px solid #236ebe;
+  border: 1px solid #1f7065;
   border-radius: 15px;
 }
 
@@ -176,7 +186,7 @@
   border: none;
 }
 #header-logout-icon {
-  color: #236ebe;
+  color: #1f7065;
   width: 25px;
   height: 25px;
   padding: 0;
@@ -185,9 +195,9 @@
 
 #header-logout-button {
   background-color: transparent;
-  color: #236ebe;
+  color: #1f7065;
   padding: 4px 8px;
-  border: 1px solid #236ebe;
+  border: 1px solid #1f7065;
   border-radius: 15px;
   margin: 0 5px 0 0;
 }
